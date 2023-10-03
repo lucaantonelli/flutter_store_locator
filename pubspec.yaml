@@ -1,9 +1,9 @@
 name: store_locator
 description: Store locator for Flutter. Allow to show stores (or POI) on map based on current map position.
-version: 0.0.1
-homepage: https://github.com/lucaantonelli/store_locator
-repository: https://github.com/lucaantonelli/store_locator
-issue_tracker: https://github.com/lucaantonelli/store_locator/issues?q=is%3Aissue+is%3Aopen
+version: 0.0.2
+homepage: https://github.com/lucaantonelli/flutter_store_locator
+repository: https://github.com/lucaantonelli/flutter_store_locator
+issue_tracker: https://github.com/lucaantonelli/flutter_store_locator/issues?q=is%3Aissue+is%3Aopen
 
 environment:
   sdk: '>=3.1.2 <4.0.0'

@@ -37,23 +37,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const String url = "https://627bb38fa01c46a853238cb9.mockapi.io/api/v1/";
+  static const String url =
+      "https://627bb38fa01c46a853238cb9.mockapi.io/api/v1/";
 
   BitmapDescriptor? customMarker;
 
-  static BaseOptions options = BaseOptions(baseUrl: url, responseType: ResponseType.json);
+  static BaseOptions options =
+      BaseOptions(baseUrl: url, responseType: ResponseType.json);
 
   Future<BitmapDescriptor> getMarkerIcon() async {
     ByteData data = await rootBundle.load('assets/marker.png');
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: 100);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: 100);
     ui.FrameInfo fi = await codec.getNextFrame();
-    final Uint8List markerIcon = (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    final Uint8List markerIcon =
+        (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+            .buffer
+            .asUint8List();
     return BitmapDescriptor.fromBytes(markerIcon);
   }
 
   createMarker(context) {
-    if(customMarker == null) {
-      getMarkerIcon().then((markerIcon){
+    if (customMarker == null) {
+      getMarkerIcon().then((markerIcon) {
         setState(() {
           customMarker = markerIcon;
         });

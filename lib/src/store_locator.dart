@@ -23,7 +23,8 @@ class StoreLocator<T> extends StatefulWidget {
   State<StoreLocator<T>> createState() => _StoreLocatorState<T>();
 }
 
-class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingObserver {
+class _StoreLocatorState<T> extends State<StoreLocator<T>>
+    with WidgetsBindingObserver {
   late LatLng currentPosition;
 
   // Default to true to make the first request
@@ -94,10 +95,12 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingOb
           // TODO: It is possible to check directly the entire marker (need to check)
           // bool markerExist = _markerSet.contains(marker);
           bool latitudeNotExist = _markerSet
-              .where((item) => item.position.latitude == marker.position.latitude)
+              .where(
+                  (item) => item.position.latitude == marker.position.latitude)
               .isEmpty;
           bool longitudeNotExist = _markerSet
-              .where((item) => item.position.longitude == marker.position.longitude)
+              .where((item) =>
+                  item.position.longitude == marker.position.longitude)
               .isEmpty;
           if (latitudeNotExist && longitudeNotExist) {
             markers.add(marker);
@@ -130,7 +133,8 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingOb
       zoomGesturesEnabled: widget.mapConfiguration.zoomGesturesEnabled,
       liteModeEnabled: widget.mapConfiguration.liteModeEnabled,
       tiltGesturesEnabled: widget.mapConfiguration.tiltGesturesEnabled,
-      fortyFiveDegreeImageryEnabled: widget.mapConfiguration.fortyFiveDegreeImageryEnabled,
+      fortyFiveDegreeImageryEnabled:
+          widget.mapConfiguration.fortyFiveDegreeImageryEnabled,
       myLocationEnabled: widget.mapConfiguration.myLocationEnabled,
       myLocationButtonEnabled: widget.mapConfiguration.myLocationButtonEnabled,
       layoutDirection: widget.mapConfiguration.layoutDirection,
