@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+/// Supply an instance of this class to [StoreLocator.mapConfiguration]
+/// A copy of [GoogleMap] configuration fields
 class MapConfiguration {
   final CameraPosition initialCameraPosition;
   final void Function(GoogleMapController)? onMapCreated;
@@ -31,10 +33,7 @@ class MapConfiguration {
   final Set<Polygon> polygons;
   final Set<Polyline> polylines;
   final Set<Circle> circles;
-  // final void Function()? onCameraMoveStarted;
   final Set<TileOverlay> tileOverlays;
-  // final void Function(CameraPosition)? onCameraMove;
-  // final void Function()? onCameraIdle;
   final void Function(LatLng)? onTap;
   final void Function(LatLng)? onLongPress;
   final String? cloudMapId;

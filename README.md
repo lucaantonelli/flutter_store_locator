@@ -28,32 +28,32 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 ```dart
 StoreLocator<Store>(
-	mapConfiguration: const MapConfiguration(
-		initialCameraPosition: CameraPosition(
-			target: LatLng(45.464211, 9.191383),
-			zoom: 10,
-		),
-	),
-	positionCallback: (position) async {
-		Response response = await Dio().get('stores', queryParameters: {
-			"latitude": position.latitude,
+  mapConfiguration: const MapConfiguration(
+    initialCameraPosition: CameraPosition(
+      target: LatLng(45.464211, 9.191383),
+      zoom: 10,
+    ),
+  ),
+  positionCallback: (position) async {
+    Response response = await Dio().get('stores', queryParameters: {
+      "latitude": position.latitude,
       "longitude": position.longitude,
-		});
-		if (response.statusCode == 200 || response.statusCode == 201) {
-			return storesFromJson(response.data);
-		}
-		return [];
-	},
-	markerBuilder: (store) {
-		return Marker(
-			markerId: MarkerId(store.id.toString()),
-			position: LatLng(store.latitude, store.longitude),
-			infoWindow: InfoWindow(
-				title: store.name,
-				snippet: store.city,
-			),
-		);
-	},
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return storesFromJson(response.data);
+    }
+    return [];
+  },
+  markerBuilder: (store) {
+    return Marker(
+      markerId: MarkerId(store.id.toString()),
+      position: LatLng(store.latitude, store.longitude),
+      infoWindow: InfoWindow(
+        title: store.name,
+        snippet: store.city,
+      ),
+    );
+  },
 )
 ```
 
