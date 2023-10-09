@@ -6,38 +6,100 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 /// Supply an instance of this class to [StoreLocator.mapConfiguration]
 /// A copy of [GoogleMap] configuration fields
 class MapConfiguration {
+  /// Same as [GoogleMap.initialCameraPosition]
   final CameraPosition initialCameraPosition;
+
+  /// Same as [GoogleMap.onMapCreated]
   final void Function(GoogleMapController)? onMapCreated;
+
+  /// Same as [GoogleMap.gestureRecognizers]
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
+
+  /// Same as [GoogleMap.webGestureHandling]
   final WebGestureHandling? webGestureHandling;
+
+  /// Same as [GoogleMap.compassEnabled]
   final bool compassEnabled;
+
+  /// Same as [GoogleMap.mapToolbarEnabled]
   final bool mapToolbarEnabled;
+
+  /// Same as [GoogleMap.cameraTargetBounds]
   final CameraTargetBounds cameraTargetBounds;
+
+  /// Same as [GoogleMap.mapType]
   final MapType mapType;
+
+  /// Same as [GoogleMap.minMaxZoomPreference]
   final MinMaxZoomPreference minMaxZoomPreference;
+
+  /// Same as [GoogleMap.rotateGesturesEnabled]
   final bool rotateGesturesEnabled;
+
+  /// Same as [GoogleMap.scrollGesturesEnabled]
   final bool scrollGesturesEnabled;
+
+  /// Same as [GoogleMap.zoomControlsEnabled]
   final bool zoomControlsEnabled;
+
+  /// Same as [GoogleMap.zoomGesturesEnabled]
   final bool zoomGesturesEnabled;
+
+  /// Same as [GoogleMap.liteModeEnabled]
   final bool liteModeEnabled;
+
+  /// Same as [GoogleMap.tiltGesturesEnabled]
   final bool tiltGesturesEnabled;
+
+  /// Same as [GoogleMap.fortyFiveDegreeImageryEnabled]
   final bool fortyFiveDegreeImageryEnabled;
+
+  /// Same as [GoogleMap.myLocationEnabled]
   final bool myLocationEnabled;
+
+  /// Same as [GoogleMap.myLocationButtonEnabled]
   final bool myLocationButtonEnabled;
+
+  /// Same as [GoogleMap.layoutDirection]
   final TextDirection? layoutDirection;
+
+  /// Same as [GoogleMap.padding]
   final EdgeInsets padding;
+
+  /// Same as [GoogleMap.indoorViewEnabled]
   final bool indoorViewEnabled;
+
+  /// Same as [GoogleMap.trafficEnabled]
   final bool trafficEnabled;
+
+  /// Same as [GoogleMap.buildingsEnabled]
   final bool buildingsEnabled;
+
+  /// Same as [GoogleMap.markers]
   final Set<Marker> markers;
+
+  /// Same as [GoogleMap.polygons]
   final Set<Polygon> polygons;
+
+  /// Same as [GoogleMap.polylines]
   final Set<Polyline> polylines;
+
+  /// Same as [GoogleMap.circles]
   final Set<Circle> circles;
+
+  /// Same as [GoogleMap.tileOverlays]
   final Set<TileOverlay> tileOverlays;
+
+  /// Same as [GoogleMap.onTap]
   final void Function(LatLng)? onTap;
+
+  /// Same as [GoogleMap.onLongPress]
   final void Function(LatLng)? onLongPress;
+
+  /// Same as [GoogleMap.cloudMapId]
   final String? cloudMapId;
 
+  /// Creates a MapConfiguration
   const MapConfiguration({
     this.initialCameraPosition = const CameraPosition(
       target: LatLng(0.0, 0.0),
@@ -74,6 +136,8 @@ class MapConfiguration {
     this.cloudMapId,
   });
 
+  /// Copies the [MapConfiguration] and only changes the specified
+  /// properties
   MapConfiguration copyWith({
     CameraPosition? initialCameraPosition,
     void Function(GoogleMapController)? onMapCreated,
@@ -108,8 +172,7 @@ class MapConfiguration {
     String? cloudMapId,
   }) =>
       MapConfiguration(
-        initialCameraPosition:
-            initialCameraPosition ?? this.initialCameraPosition,
+        initialCameraPosition: initialCameraPosition ?? this.initialCameraPosition,
         onMapCreated: onMapCreated ?? this.onMapCreated,
         gestureRecognizers: gestureRecognizers ?? this.gestureRecognizers,
         webGestureHandling: webGestureHandling ?? this.webGestureHandling,
@@ -118,10 +181,8 @@ class MapConfiguration {
         cameraTargetBounds: cameraTargetBounds ?? this.cameraTargetBounds,
         mapType: mapType ?? this.mapType,
         minMaxZoomPreference: minMaxZoomPreference ?? this.minMaxZoomPreference,
-        rotateGesturesEnabled:
-            rotateGesturesEnabled ?? this.rotateGesturesEnabled,
-        scrollGesturesEnabled:
-            scrollGesturesEnabled ?? this.scrollGesturesEnabled,
+        rotateGesturesEnabled: rotateGesturesEnabled ?? this.rotateGesturesEnabled,
+        scrollGesturesEnabled: scrollGesturesEnabled ?? this.scrollGesturesEnabled,
         zoomControlsEnabled: zoomControlsEnabled ?? this.zoomControlsEnabled,
         zoomGesturesEnabled: zoomGesturesEnabled ?? this.zoomGesturesEnabled,
         liteModeEnabled: liteModeEnabled ?? this.liteModeEnabled,
@@ -129,8 +190,7 @@ class MapConfiguration {
         fortyFiveDegreeImageryEnabled:
             fortyFiveDegreeImageryEnabled ?? this.fortyFiveDegreeImageryEnabled,
         myLocationEnabled: myLocationEnabled ?? this.myLocationEnabled,
-        myLocationButtonEnabled:
-            myLocationButtonEnabled ?? this.myLocationButtonEnabled,
+        myLocationButtonEnabled: myLocationButtonEnabled ?? this.myLocationButtonEnabled,
         layoutDirection: layoutDirection ?? this.layoutDirection,
         padding: padding ?? this.padding,
         indoorViewEnabled: indoorViewEnabled ?? this.indoorViewEnabled,
