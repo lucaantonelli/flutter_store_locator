@@ -45,7 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
   static BaseOptions options =
       BaseOptions(baseUrl: url, responseType: ResponseType.json);
 
-  Future<BitmapDescriptor> getMarkerIcon() async {
+  @override
+  void initState() {
+    super.initState();
+    getMarkerIcon();
+  }
+
+  Future<void> getMarkerIcon() async {
     ByteData data = await rootBundle.load('assets/marker.png');
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
         targetWidth: 100);
@@ -54,22 +60,13 @@ class _MyHomePageState extends State<MyHomePage> {
         (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
             .buffer
             .asUint8List();
-    return BitmapDescriptor.fromBytes(markerIcon);
-  }
-
-  createMarker(context) {
-    if (customMarker == null) {
-      getMarkerIcon().then((markerIcon) {
-        setState(() {
-          customMarker = markerIcon;
-        });
-      });
-    }
+    setState(() {
+      customMarker = BitmapDescriptor.fromBytes(markerIcon);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    createMarker(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -100,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           markerBuilder: (store) {
             return Marker(
               markerId: MarkerId(store.id.toString()),
-              icon: customMarker!,
+              icon: customMarker ?? BitmapDescriptor.defaultMarker,
               position: LatLng(store.latitude, store.longitude),
               infoWindow: InfoWindow(
                 title: store.name,

@@ -77,7 +77,8 @@ class StoreLocator<T> extends StatefulWidget {
   State<StoreLocator<T>> createState() => _StoreLocatorState<T>();
 }
 
-class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingObserver {
+class _StoreLocatorState<T> extends State<StoreLocator<T>>
+    with WidgetsBindingObserver {
   /// It contains the current centered position on the map
   ///
   /// Default is set to initialCameraPosition.target inside initState
@@ -153,10 +154,12 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingOb
       if (!widget.resetMarkers) {
         // TODO: It is possible to check directly the entire marker (need to check)
         // bool markerExist = _markerSet.contains(marker);
-        bool latitudeNotExist =
-            _markerSet.where((item) => item.position.latitude == marker.position.latitude).isEmpty;
+        bool latitudeNotExist = _markerSet
+            .where((item) => item.position.latitude == marker.position.latitude)
+            .isEmpty;
         bool longitudeNotExist = _markerSet
-            .where((item) => item.position.longitude == marker.position.longitude)
+            .where(
+                (item) => item.position.longitude == marker.position.longitude)
             .isEmpty;
         if (latitudeNotExist && longitudeNotExist) {
           markers.add(marker);
@@ -188,7 +191,8 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>> with WidgetsBindingOb
       zoomGesturesEnabled: widget.mapConfiguration.zoomGesturesEnabled,
       liteModeEnabled: widget.mapConfiguration.liteModeEnabled,
       tiltGesturesEnabled: widget.mapConfiguration.tiltGesturesEnabled,
-      fortyFiveDegreeImageryEnabled: widget.mapConfiguration.fortyFiveDegreeImageryEnabled,
+      fortyFiveDegreeImageryEnabled:
+          widget.mapConfiguration.fortyFiveDegreeImageryEnabled,
       myLocationEnabled: widget.mapConfiguration.myLocationEnabled,
       myLocationButtonEnabled: widget.mapConfiguration.myLocationButtonEnabled,
       layoutDirection: widget.mapConfiguration.layoutDirection,

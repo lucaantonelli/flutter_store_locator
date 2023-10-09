@@ -1,3 +1,8 @@
+## 0.0.5 - 2023.10.09
+
+* Improved example
+* Dart code formatted
+
 ## 0.0.4 - 2023.10.09
 
 * Added code documentation

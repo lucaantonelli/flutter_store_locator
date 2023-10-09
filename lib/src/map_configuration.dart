@@ -172,7 +172,8 @@ class MapConfiguration {
     String? cloudMapId,
   }) =>
       MapConfiguration(
-        initialCameraPosition: initialCameraPosition ?? this.initialCameraPosition,
+        initialCameraPosition:
+            initialCameraPosition ?? this.initialCameraPosition,
         onMapCreated: onMapCreated ?? this.onMapCreated,
         gestureRecognizers: gestureRecognizers ?? this.gestureRecognizers,
         webGestureHandling: webGestureHandling ?? this.webGestureHandling,
@@ -181,8 +182,10 @@ class MapConfiguration {
         cameraTargetBounds: cameraTargetBounds ?? this.cameraTargetBounds,
         mapType: mapType ?? this.mapType,
         minMaxZoomPreference: minMaxZoomPreference ?? this.minMaxZoomPreference,
-        rotateGesturesEnabled: rotateGesturesEnabled ?? this.rotateGesturesEnabled,
-        scrollGesturesEnabled: scrollGesturesEnabled ?? this.scrollGesturesEnabled,
+        rotateGesturesEnabled:
+            rotateGesturesEnabled ?? this.rotateGesturesEnabled,
+        scrollGesturesEnabled:
+            scrollGesturesEnabled ?? this.scrollGesturesEnabled,
         zoomControlsEnabled: zoomControlsEnabled ?? this.zoomControlsEnabled,
         zoomGesturesEnabled: zoomGesturesEnabled ?? this.zoomGesturesEnabled,
         liteModeEnabled: liteModeEnabled ?? this.liteModeEnabled,
@@ -190,7 +193,8 @@ class MapConfiguration {
         fortyFiveDegreeImageryEnabled:
             fortyFiveDegreeImageryEnabled ?? this.fortyFiveDegreeImageryEnabled,
         myLocationEnabled: myLocationEnabled ?? this.myLocationEnabled,
-        myLocationButtonEnabled: myLocationButtonEnabled ?? this.myLocationButtonEnabled,
+        myLocationButtonEnabled:
+            myLocationButtonEnabled ?? this.myLocationButtonEnabled,
         layoutDirection: layoutDirection ?? this.layoutDirection,
         padding: padding ?? this.padding,
         indoorViewEnabled: indoorViewEnabled ?? this.indoorViewEnabled,
