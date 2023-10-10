@@ -1,3 +1,7 @@
+## 0.0.6 - 2023.10.10
+
+* Fixed README import error
+
 ## 0.0.5 - 2023.10.09
 
 * Improved example

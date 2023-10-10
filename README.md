@@ -21,7 +21,7 @@ You also need to implement `google_maps_flutter` properly, check their [guide](h
 You can import the package with:
 
 ```dart
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:store_locator/store_locator.dart';
 ```
 
 ## Example
