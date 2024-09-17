@@ -7,11 +7,11 @@ import 'package:store_locator/store_locator.dart';
 import 'dart:ui' as ui;
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
@@ -22,21 +22,21 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Store Locator Demo'),
+      home: const StoreLocatorDemo(title: 'Store Locator Demo'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class StoreLocatorDemo extends StatefulWidget {
+  const StoreLocatorDemo({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<StoreLocatorDemo> createState() => _StoreLocatorDemoState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _StoreLocatorDemoState extends State<StoreLocatorDemo> {
   static const String url =
       "https://627bb38fa01c46a853238cb9.mockapi.io/api/v1/";
 
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .buffer
             .asUint8List();
     setState(() {
-      customMarker = BitmapDescriptor.fromBytes(markerIcon);
+      customMarker = BitmapDescriptor.bytes(markerIcon);
     });
   }
 

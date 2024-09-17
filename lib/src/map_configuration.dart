@@ -87,8 +87,17 @@ class MapConfiguration {
   /// Same as [GoogleMap.circles]
   final Set<Circle> circles;
 
+  /// Same as [GoogleMap.onCameraMoveStarted]
+  final void Function()? onCameraMoveStarted;
+
   /// Same as [GoogleMap.tileOverlays]
   final Set<TileOverlay> tileOverlays;
+
+  /// Same as [GoogleMap.onCameraMove]
+  final void Function(CameraPosition)? onCameraMove;
+
+  /// Same as [GoogleMap.onCameraIdle]
+  final void Function()? onCameraIdle;
 
   /// Same as [GoogleMap.onTap]
   final void Function(LatLng)? onTap;
@@ -130,7 +139,10 @@ class MapConfiguration {
     this.polygons = const <Polygon>{},
     this.polylines = const <Polyline>{},
     this.circles = const <Circle>{},
+    this.onCameraMoveStarted,
     this.tileOverlays = const <TileOverlay>{},
+    this.onCameraMove,
+    this.onCameraIdle,
     this.onTap,
     this.onLongPress,
     this.cloudMapId,
@@ -166,7 +178,10 @@ class MapConfiguration {
     Set<Polygon>? polygons,
     Set<Polyline>? polylines,
     Set<Circle>? circles,
+    void Function()? onCameraMoveStarted,
     Set<TileOverlay>? tileOverlays,
+    void Function(CameraPosition)? onCameraMove,
+    void Function()? onCameraIdle,
     void Function(LatLng)? onTap,
     void Function(LatLng)? onLongPress,
     String? cloudMapId,
@@ -204,7 +219,10 @@ class MapConfiguration {
         polygons: polygons ?? this.polygons,
         polylines: polylines ?? this.polylines,
         circles: circles ?? this.circles,
+        onCameraMoveStarted: onCameraMoveStarted ?? this.onCameraMoveStarted,
         tileOverlays: tileOverlays ?? this.tileOverlays,
+        onCameraMove: onCameraMove ?? this.onCameraMove,
+        onCameraIdle: onCameraIdle ?? this.onCameraIdle,
         onTap: onTap ?? this.onTap,
         onLongPress: onLongPress ?? this.onLongPress,
         cloudMapId: cloudMapId ?? this.cloudMapId,

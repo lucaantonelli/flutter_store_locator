@@ -1,3 +1,9 @@
+## 1.0.0 - 2024.09.17
+
+* Add missing functions: onCameraMoveStarted, onCameraMove and onCameraIdle
+* Pub update
+* Improved example
+
 ## 0.0.6 - 2023.10.10
 
 * Fixed README import error

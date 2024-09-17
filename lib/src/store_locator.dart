@@ -66,12 +66,12 @@ class StoreLocator<T> extends StatefulWidget {
 
   /// Creates a [StoreLocator]
   const StoreLocator({
-    Key? key,
+    super.key,
     required this.positionCallback,
     required this.markerBuilder,
     this.mapConfiguration = const MapConfiguration(),
     this.resetMarkers = false,
-  }) : super(key: key);
+  });
 
   @override
   State<StoreLocator<T>> createState() => _StoreLocatorState<T>();
@@ -203,15 +203,22 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>>
       polygons: widget.mapConfiguration.polygons,
       polylines: widget.mapConfiguration.polylines,
       circles: widget.mapConfiguration.circles,
+      onCameraMoveStarted: () {
+        widget.mapConfiguration.onCameraMoveStarted?.call();
+        setState(() => cameraMoved = true);
+      },
       tileOverlays: widget.mapConfiguration.tileOverlays,
+      onCameraMove: (camera) {
+        widget.mapConfiguration.onCameraMove?.call(camera);
+        _updatePosition;
+      },
+      onCameraIdle: () {
+        widget.mapConfiguration.onCameraIdle?.call();
+        _getMarkers;
+      },
       onTap: widget.mapConfiguration.onTap,
       onLongPress: widget.mapConfiguration.onLongPress,
       cloudMapId: widget.mapConfiguration.cloudMapId,
-      onCameraMoveStarted: () {
-        setState(() => cameraMoved = true);
-      },
-      onCameraMove: _updatePosition,
-      onCameraIdle: _getMarkers,
     );
   }
 }

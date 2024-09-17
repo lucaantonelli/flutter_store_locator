@@ -28,6 +28,5 @@ class Store {
 }
 
 List<Store> storesFromJson(dynamic jsonData) {
-  final data = jsonData;
-  return List<Store>.from(data.map((item) => Store.fromJson(item)));
+  return List<Store>.from(jsonData.map((item) => Store.fromJson(item)));
 }
