@@ -1,12 +1,12 @@
-# Store Locator plugin for Flutter
+# Store Locator for Flutter
 
 [![pub package](https://img.shields.io/pub/v/store_locator.svg)](https://pub.dev/packages/store_locator) [![build](https://img.shields.io/badge/build-passing-brightgreen)](https://pub.dev/packages/store_locator)
 
-A Flutter plugin for iOS and Android for showing map markers dynamically based on Api Call that use haversine or similar.
+A Flutter package for showing map markers dynamically based on API calls that use Haversine distance or a similar location query.
 
 |             | Android | iOS   | Web   |
 |-------------|---------|-------|-------|
-| **Support** | SDK 20+ | 11.0+ | Any\* |
+| **Support** | SDK 24+ | 14.0+ | Any\* |
 
 ![The example app running in Android](https://github.com/lucaantonelli/flutter_store_locator/blob/master/resources/demo.gif?raw=true)
 

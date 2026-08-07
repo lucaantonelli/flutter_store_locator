@@ -55,6 +55,9 @@ class StoreLocator<T> extends StatefulWidget {
   /// ```
   final MarkerBuilder<T> markerBuilder;
 
+  /// Called when [positionCallback] throws.
+  final StoreLocatorErrorCallback? onError;
+
   /// The configuration of the [GoogleMaps](https://pub.dev/documentation/google_maps_flutter/latest/google_maps_flutter/google_maps_flutter-library.html)
   /// that the StoreLocator widget displays
   final MapConfiguration mapConfiguration;
@@ -69,6 +72,7 @@ class StoreLocator<T> extends StatefulWidget {
     super.key,
     required this.positionCallback,
     required this.markerBuilder,
+    this.onError,
     this.mapConfiguration = const MapConfiguration(),
     this.resetMarkers = false,
   });
@@ -77,8 +81,7 @@ class StoreLocator<T> extends StatefulWidget {
   State<StoreLocator<T>> createState() => _StoreLocatorState<T>();
 }
 
-class _StoreLocatorState<T> extends State<StoreLocator<T>>
-    with WidgetsBindingObserver {
+class _StoreLocatorState<T> extends State<StoreLocator<T>> {
   /// It contains the current centered position on the map
   ///
   /// Default is set to initialCameraPosition.target inside initState
@@ -92,18 +95,12 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>>
 
   // Contain the markers returned by the positionCallback
   Iterable<T> _markers = [];
-  // Object? _error;
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  int _cameraGeneration = 0;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     currentPosition = widget.mapConfiguration.initialCameraPosition.target;
     // Get markers for the initial position
     _getMarkers();
@@ -118,68 +115,65 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>>
     // To prevent execution in idle if no other movements were made
     if (!cameraMoved) return;
 
-    if (mounted) {
-      // setState(() {
-      //   this._error = null;
-      // });
+    cameraMoved = false;
+    final int requestGeneration = _cameraGeneration;
+    final LatLng requestedPosition = currentPosition;
 
-      Iterable<T> markers = [];
-      // Object? error;
-
-      try {
-        markers = await widget.positionCallback(currentPosition);
-      } catch (e) {
-        // error = e;
-      }
-
-      if (mounted) {
-        setState(() {
-          // this._error = error;
-          _markers = markers;
-          _markerSet = _buildMarkers();
-          cameraMoved = false;
-        });
-      }
+    late final Iterable<T> markers;
+    try {
+      markers = await widget.positionCallback(requestedPosition);
+    } catch (error, stackTrace) {
+      widget.onError?.call(error, stackTrace);
+      return;
     }
+
+    // Ignore a response for a camera position that is no longer current.
+    if (!mounted || requestGeneration != _cameraGeneration) return;
+
+    setState(() {
+      _markers = markers;
+      _markerSet = _buildMarkers();
+    });
   }
 
   Set<Marker> _buildMarkers() {
-    // If resetMarkers is false set at default the current marker set
-    final Set<Marker> markers = !widget.resetMarkers ? _markerSet : {};
+    final Map<MarkerId, Marker> markersById = widget.resetMarkers
+        ? <MarkerId, Marker>{}
+        : <MarkerId, Marker>{
+            for (final Marker marker in _markerSet) marker.markerId: marker,
+          };
 
     for (final T markerItem in _markers) {
       final Marker marker = widget.markerBuilder(markerItem);
-
-      // If resetMarkers is false check wherever the marker position already exist
-      if (!widget.resetMarkers) {
-        // TODO: It is possible to check directly the entire marker (need to check)
-        // bool markerExist = _markerSet.contains(marker);
-        bool latitudeNotExist = _markerSet
-            .where((item) => item.position.latitude == marker.position.latitude)
-            .isEmpty;
-        bool longitudeNotExist = _markerSet
-            .where(
-                (item) => item.position.longitude == marker.position.longitude)
-            .isEmpty;
-        if (latitudeNotExist && longitudeNotExist) {
-          markers.add(marker);
-        }
-      } else {
-        markers.add(marker);
-      }
+      markersById[marker.markerId] = marker;
     }
 
-    return markers;
+    return markersById.values.toSet();
   }
+
+  Set<Marker> get _visibleMarkers => <MarkerId, Marker>{
+    for (final Marker marker in widget.mapConfiguration.markers)
+      marker.markerId: marker,
+    for (final Marker marker in _markerSet) marker.markerId: marker,
+  }.values.toSet();
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      markers: _markerSet,
+      markers: _visibleMarkers,
       initialCameraPosition: widget.mapConfiguration.initialCameraPosition,
+      style: widget.mapConfiguration.style,
       onMapCreated: widget.mapConfiguration.onMapCreated,
       gestureRecognizers: widget.mapConfiguration.gestureRecognizers,
       webGestureHandling: widget.mapConfiguration.webGestureHandling,
+      webCameraControlPosition:
+          widget.mapConfiguration.webCameraControlPosition,
+      webCameraControlEnabled: widget.mapConfiguration.webCameraControlEnabled,
+      mapTypeControlEnabled: widget.mapConfiguration.mapTypeControlEnabled,
+      fullscreenControlEnabled:
+          widget.mapConfiguration.fullscreenControlEnabled,
+      streetViewControlEnabled:
+          widget.mapConfiguration.streetViewControlEnabled,
       compassEnabled: widget.mapConfiguration.compassEnabled,
       mapToolbarEnabled: widget.mapConfiguration.mapToolbarEnabled,
       cameraTargetBounds: widget.mapConfiguration.cameraTargetBounds,
@@ -203,22 +197,28 @@ class _StoreLocatorState<T> extends State<StoreLocator<T>>
       polygons: widget.mapConfiguration.polygons,
       polylines: widget.mapConfiguration.polylines,
       circles: widget.mapConfiguration.circles,
+      clusterManagers: widget.mapConfiguration.clusterManagers,
+      heatmaps: widget.mapConfiguration.heatmaps,
       onCameraMoveStarted: () {
+        _cameraGeneration++;
+        cameraMoved = true;
         widget.mapConfiguration.onCameraMoveStarted?.call();
-        setState(() => cameraMoved = true);
       },
       tileOverlays: widget.mapConfiguration.tileOverlays,
+      groundOverlays: widget.mapConfiguration.groundOverlays,
       onCameraMove: (camera) {
+        _updatePosition(camera);
         widget.mapConfiguration.onCameraMove?.call(camera);
-        _updatePosition;
       },
       onCameraIdle: () {
+        _getMarkers();
         widget.mapConfiguration.onCameraIdle?.call();
-        _getMarkers;
       },
       onTap: widget.mapConfiguration.onTap,
       onLongPress: widget.mapConfiguration.onLongPress,
-      cloudMapId: widget.mapConfiguration.cloudMapId,
+      markerType: widget.mapConfiguration.markerType,
+      colorScheme: widget.mapConfiguration.colorScheme,
+      mapId: widget.mapConfiguration.mapId,
     );
   }
 }

@@ -1,0 +1,11 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.history/
+.idea/
+.vscode/
+build/
+example/build/
+resources/
+*.iml
+*.lock

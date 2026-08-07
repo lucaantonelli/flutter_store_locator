@@ -42,8 +42,10 @@ class _StoreLocatorDemoState extends State<StoreLocatorDemo> {
 
   BitmapDescriptor? customMarker;
 
-  static BaseOptions options =
-      BaseOptions(baseUrl: url, responseType: ResponseType.json);
+  static BaseOptions options = BaseOptions(
+    baseUrl: url,
+    responseType: ResponseType.json,
+  );
 
   @override
   void initState() {
@@ -53,13 +55,14 @@ class _StoreLocatorDemoState extends State<StoreLocatorDemo> {
 
   Future<void> getMarkerIcon() async {
     ByteData data = await rootBundle.load('assets/marker.png');
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: 100);
+    ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+      targetWidth: 100,
+    );
     ui.FrameInfo fi = await codec.getNextFrame();
-    final Uint8List markerIcon =
-        (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-            .buffer
-            .asUint8List();
+    final Uint8List markerIcon = (await fi.image.toByteData(
+      format: ui.ImageByteFormat.png,
+    ))!.buffer.asUint8List();
     setState(() {
       customMarker = BitmapDescriptor.bytes(markerIcon);
     });
@@ -68,10 +71,7 @@ class _StoreLocatorDemoState extends State<StoreLocatorDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(widget.title), centerTitle: true),
       body: Center(
         child: StoreLocator<Store>(
           resetMarkers: false,
@@ -99,10 +99,7 @@ class _StoreLocatorDemoState extends State<StoreLocatorDemo> {
               markerId: MarkerId(store.id.toString()),
               icon: customMarker ?? BitmapDescriptor.defaultMarker,
               position: LatLng(store.latitude, store.longitude),
-              infoWindow: InfoWindow(
-                title: store.name,
-                snippet: store.city,
-              ),
+              infoWindow: InfoWindow(title: store.name, snippet: store.city),
             );
           },
         ),

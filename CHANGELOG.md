@@ -1,3 +1,16 @@
+## 1.1.0 - 2026.08.07
+
+* Update `google_maps_flutter` to 2.18.0 and align SDK constraints
+* Add `mapId` while retaining `cloudMapId` as a deprecated alias
+* Fix camera callbacks so marker loading uses the current map position
+* Merge markers by `MarkerId` and ignore stale asynchronous responses
+* Add an optional `onError` callback for failed marker requests
+* Expose the latest Google Maps configuration options
+* Preserve markers supplied through `MapConfiguration`
+* Modernize the example dependencies, platform targets, and web bootstrap
+* Exclude development artifacts and the large demo GIF from the published archive
+* Add package topics and update the supported platform versions
+
 ## 1.0.0 - 2024.09.17
 
 * Add missing functions: onCameraMoveStarted, onCameraMove and onCameraIdle
